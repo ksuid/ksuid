@@ -8,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 public class HexTest {
     private static final String PLAIN_TEXT = "The quick brown fox jumps over the lazy dog";
@@ -22,8 +21,18 @@ public class HexTest {
     }
 
     @Test
+    public void characterSet() {
+        assertThat(Hex.HEX_CHARACTERS, is("0123456789abcdef".toCharArray()));
+    }
+
+    @Test
     public void hexDecode() {
         assertThat(Hex.hexDecode(HEX), is(PLAIN_TEXT.getBytes()));
+    }
+
+    @Test
+    public void hexDecodeCaseInsensitive() {
+        assertThat(Hex.hexDecode(HEX.toUpperCase()), is(PLAIN_TEXT.getBytes()));
     }
 
     @Test
@@ -34,7 +43,11 @@ public class HexTest {
     @Test(expected = IllegalArgumentException.class)
     public void hexDecodeIllegalHexCharacter() {
         Hex.hexDecode(HEX.replace('5', 'z'));
-        fail("Expected " + IllegalArgumentException.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void hexDecodeOddLength() {
+        Hex.hexDecode(HEX.substring(1));
     }
 
     @Test
@@ -42,7 +55,6 @@ public class HexTest {
         assertThat(Hex.hexEncode(PLAIN_TEXT.getBytes()), is(HEX));
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     public void hexEncodeNull() {
         assertThat(Hex.hexEncode(null), is(nullValue()));
