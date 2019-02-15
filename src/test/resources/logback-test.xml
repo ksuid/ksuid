@@ -1,0 +1,12 @@
+<configuration>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>ksuid-test.log</file>
+        <encoder>
+            <pattern>%date{ISO8601} priority=%-5level source=%logger %replace(%mdc){', ', ' '} %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
