@@ -113,6 +113,12 @@ public class Ksuid implements Comparable<Ksuid> {
         return getTime(ZoneId.systemDefault());
     }
 
+    /**
+     * Get the KSUID time component in the provided timezone.
+     *
+     * @param zoneId the timezone
+     * @return KSUID time component string
+     */
     public String getTime(final ZoneId zoneId) {
         return String.format("%1$tF %1$tT %1$tz %1$tZ", getInstant().atZone(zoneId));
     }
