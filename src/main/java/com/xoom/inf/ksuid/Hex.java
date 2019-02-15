@@ -10,14 +10,14 @@ package com.xoom.inf.ksuid;
  */
 final class Hex {
     // VisibleForTesting
-    static final char[] HEX_CHARACTERS = "0123456789abcdef".toCharArray();
+    static final char[] HEX_CHARACTERS = "0123456789ABCDEF".toCharArray();
 
     private Hex() {
         throw new AssertionError("static utility class");
     }
 
     /**
-     * Converts a string of lower-case hexadecimal characters into an array of bytes of those same values.
+     * Converts a string of hexadecimal characters into an array of bytes of those same values.
      * The returned array will be half the length of the passed string, as it takes two characters to represent any given byte.
      * An exception is thrown if the passed string has an odd number of elements or non-hexadecimal characters.
      *
@@ -34,7 +34,7 @@ final class Hex {
      * The returned string will be double the length of the passed array, as it takes two characters to represent any given byte.
      *
      * @param bytes bytes to encode
-     * @return a string of lower-case hexadecimal characters
+     * @return a string of upper-case hexadecimal characters
      */
     static String hexEncode(final byte[] bytes) {
         return bytes != null ? printHexBinary(bytes) : null;

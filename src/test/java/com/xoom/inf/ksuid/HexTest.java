@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 
 public class HexTest {
     private static final String PLAIN_TEXT = "The quick brown fox jumps over the lazy dog";
-    private static final String HEX = "54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f67";
+    private static final String HEX = "54686520717569636B2062726F776E20666F78206A756D7073206F76657220746865206C617A7920646F67";
 
     @Test(expected = InvocationTargetException.class)
     public void utilityClass() throws Exception {
@@ -22,7 +22,7 @@ public class HexTest {
 
     @Test
     public void characterSet() {
-        assertThat(Hex.HEX_CHARACTERS, is("0123456789abcdef".toCharArray()));
+        assertThat(Hex.HEX_CHARACTERS, is("0123456789ABCDEF".toCharArray()));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class HexTest {
 
     @Test
     public void hexDecodeCaseInsensitive() {
-        assertThat(Hex.hexDecode(HEX.toUpperCase()), is(PLAIN_TEXT.getBytes()));
+        assertThat(Hex.hexDecode(HEX.toLowerCase()), is(PLAIN_TEXT.getBytes()));
     }
 
     @Test

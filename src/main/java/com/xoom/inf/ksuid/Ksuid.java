@@ -92,7 +92,7 @@ public class Ksuid implements Comparable<Ksuid> {
      * @return KSUID hex string
      */
     public String asRaw() {
-        return hexEncode(ksuidBytes).toUpperCase();
+        return hexEncode(ksuidBytes);
     }
 
     /**
@@ -138,7 +138,7 @@ public class Ksuid implements Comparable<Ksuid> {
      * @return KSUID payload component
      */
     public String getPayload() {
-        return hexEncode(payload).toUpperCase();
+        return hexEncode(payload);
     }
 
     /**
