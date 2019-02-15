@@ -55,5 +55,33 @@ COMPONENTS:
     Payload: 7C4C2B9274FAA52D0083816D1C181CEF
 ```
 
+## Performance
+
+A very rough performance profile for generating KSUIDs was run on a 2017 MacBook Pro with a 3.1 GHz Intel Core i7 and 16 GB 2133 MHz LPDDR3 RAM.
+
+```java
+public static void main(final String[] args) {
+    final KsuidGenerator generator = new KsuidGenerator(new SecureRandom());
+    IntStream.range(0, 100).forEach(i -> generator.newKsuid()); // prime the random
+
+    IntStream.iterate(1000, operand -> operand * 10)
+             .limit(5)
+             .forEach(count -> {
+                 final long start = System.nanoTime();
+                 IntStream.range(0, count).forEach(i -> generator.newKsuid());
+                 final long duration = TimeUnit.MILLISECONDS.convert(System.nanoTime() - start, TimeUnit.NANOSECONDS);
+                 System.out.println(String.format("%,d in %,d ms. rate = %,d/ms", count, duration, count / duration));
+             });
+}
+```
+The output from the code block above is
+```
+1,000 in 14 ms. rate = 71/ms
+10,000 in 32 ms. rate = 312/ms
+100,000 in 95 ms. rate = 1,052/ms
+1,000,000 in 881 ms. rate = 1,135/ms
+10,000,000 in 6,665 ms. rate = 1,500/ms
+```
+
 ## Contributors
 * `rlubbat@paypal.com` Ramsey Lubbat
