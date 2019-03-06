@@ -33,8 +33,8 @@ public class KsuidTest {
     private static final int TIMESTAMP = 107608047;
     private static final int EPOCH = 1400000000;
     private static final Instant INSTANT = Instant.ofEpochSecond((long) TIMESTAMP + EPOCH);
-    private static final String TIME = "2017-10-09 21:00:47 " + String.format("%1$tz %1$tZ", INSTANT.atZone(ZoneId.systemDefault())); // e.g. 2017-10-09 21:00:47 -0700 PDT
-    private static final String TIME_UTC = "2017-10-10 04:00:47 " + String.format("%1$tz %1$tZ", INSTANT.atZone(ZoneId.of("UTC"))); // e.g. 2017-10-10 04:00:47 +0000 UTC
+    private static final String TIME = String.format("%1$tF %1$tT %1$tz %1$tZ", INSTANT.atZone(ZoneId.systemDefault()));
+    private static final String TIME_UTC = String.format("%1$tF %1$tT %1$tz %1$tZ", INSTANT.atZone(ZoneId.of("UTC")));
 
 
     @DataPoints
