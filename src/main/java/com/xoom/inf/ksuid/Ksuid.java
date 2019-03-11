@@ -22,7 +22,7 @@ import static com.xoom.inf.ksuid.Hex.hexEncode;
 @SuppressWarnings("WeakerAccess")
 public class Ksuid implements Comparable<Ksuid> {
     static final int EPOCH = 1400000000;
-    static final int PAYLOAD_BYTES = 16;
+    public static final int PAYLOAD_BYTES = 16;
 
     private static final int TIMESTAMP_BYTES = 4;
     private static final int TOTAL_BYTES = TIMESTAMP_BYTES + PAYLOAD_BYTES;
