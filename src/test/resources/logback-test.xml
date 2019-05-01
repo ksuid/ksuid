@@ -2,7 +2,7 @@
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>ksuid-test.log</file>
         <encoder>
-            <pattern>%date{ISO8601} priority=%-5level source=%logger %replace(%mdc){', ', ' '} %message%n</pattern>
+            <pattern>%d{yyyy-MMM-dd HH:mm:ss.SSS'Z',GMT} level=%p thread=%thread pid=${PID:- } code_location=%-40.40logger{39} %replace(%mdc){', ', ' '} %m%n</pattern>
         </encoder>
     </appender>
 
