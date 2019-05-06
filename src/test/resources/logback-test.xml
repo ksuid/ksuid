@@ -6,6 +6,9 @@
         </encoder>
     </appender>
 
+    <!-- Suppress the the warning about memory leaks when reloading the classloader -->
+    <logger name="uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J" level="ERROR"/>
+
     <root level="INFO">
         <appender-ref ref="FILE"/>
     </root>
