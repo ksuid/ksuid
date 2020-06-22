@@ -16,13 +16,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>xoom-boot-core</artifactId>
-            <version>${project.version}</version>
-            <optional>true</optional>
-        </dependency>
-
         <!-- Testing -->
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>

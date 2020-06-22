@@ -1,5 +1,6 @@
 package com.xoom.inf.ksuid;
 
+import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -17,8 +18,19 @@ import static com.xoom.inf.ksuid.Ksuid.PAYLOAD_BYTES;
  */
 @SuppressWarnings("WeakerAccess")
 public class KsuidGenerator {
+    private static final KsuidGenerator INSTANCE = new KsuidGenerator(new SecureRandom());
+    
     private final Supplier<byte[]> payloadSupplier;
 
+    /**
+     * Generate a new KSUID
+     * 
+     * @return string representation of new KSUID
+     */
+    public static String generate() {
+        return INSTANCE.newKsuid().asString();
+    }
+    
     /**
      * Construct a KSUID generator.
      *

@@ -1,10 +1,9 @@
 package com.xoom.inf.ksuid;
 
-import org.junit.Rule;
+import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import java.security.SecureRandom;
@@ -12,9 +11,8 @@ import java.time.Instant;
 
 import static java.time.Instant.now;
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @RunWith(Theories.class)
 public class KsuidGeneratorTest {
@@ -28,26 +26,28 @@ public class KsuidGeneratorTest {
             new KsuidGenerator(() -> new byte[16])
     };
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Theory
     public void newKsuid(final KsuidGenerator generator) {
         Ksuid ksuid = generator.newKsuid();
-        assertThat(ksuid, is(notNullValue()));
-        assertThat(ksuid.getInstant().isBefore(now()), is(true));
+        assertThat(ksuid).isNotNull();
+        assertThat(ksuid.getInstant()).isBefore(now());
 
         final Instant instant = now();
         ksuid = generator.newKsuid(instant);
-        assertThat(ksuid, is(notNullValue()));
-        assertThat(ksuid.getInstant(), is(instant.truncatedTo(SECONDS)));
+        assertThat(ksuid).isNotNull();
+        assertThat(ksuid.getInstant()).isEqualTo(instant.truncatedTo(SECONDS));
     }
 
     @Theory
     public void constructWithSupplierOfIncorrectSize(final int incorrectSize) {
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("payloadBytesSupplier must supply byte arrays of length 16");
-        new KsuidGenerator(() -> new byte[incorrectSize]);
+        assertThatCode(() -> {
+            new KsuidGenerator(() -> new byte[incorrectSize]);
+        }).isExactlyInstanceOf(IllegalArgumentException.class)
+          .hasMessage("payloadBytesSupplier must supply byte arrays of length 16");
     }
 
+    @Test
+    public void testGenerate() {
+        assertThat(KsuidGenerator.generate()).matches("[0-9a-zA-Z]{27}");
+    }
 }
