@@ -11,10 +11,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
-import java.util.stream.IntStream;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static com.xoom.inf.ksuid.Base62.BASE;
+import static com.xoom.inf.ksuid.Base62.BASE_62_CHARACTERS;
+import static com.xoom.inf.ksuid.Base62.base62Decode;
+import static com.xoom.inf.ksuid.Base62.base62Encode;
+import static java.util.stream.IntStream.range;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Theories.class)
 public class Base62Test {
@@ -34,71 +37,67 @@ public class Base62Test {
 
     @Test
     public void base() {
-        assertThat(Base62.BASE, is(BigInteger.valueOf(62)));
+        assertThat(BASE).isEqualTo(BigInteger.valueOf(62));
     }
 
     @Test
     public void characterSet() {
-        assertThat(Base62.BASE_62_CHARACTERS, is("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray()));
+        assertThat(BASE_62_CHARACTERS).isEqualTo("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray());
     }
 
     @Test
     public void indexOf() {
-        IntStream.range(0, Base62.BASE_62_CHARACTERS.length)
-                 .forEach(index -> {
-                     final char charAtIndex = Base62.BASE_62_CHARACTERS[index];
-                     assertThat(Base62.indexOf(charAtIndex), is(index));
-                 });
+        range(0, BASE_62_CHARACTERS.length)
+                .forEach(index -> {
+                    final char charAtIndex = BASE_62_CHARACTERS[index];
+                    assertThat(Base62.indexOf(charAtIndex)).isEqualTo(index);
+                });
     }
 
     @Theory
     public void encodeNoPadding(final Entry<byte[], String> entry) {
-        final String s = Base62.base62Encode(entry.getKey());
-        assertThat(s, is(entry.getValue()));
+        final String s = base62Encode(entry.getKey());
+        assertThat(s).isEqualTo(entry.getValue());
     }
 
     @Theory
     public void encodeWithPadding(final Entry<byte[], String> entry) {
-        final String s = Base62.base62Encode(entry.getKey(), entry.getValue().length() + 4);
-        assertThat(s, is("0000" + entry.getValue()));
+        final String s = base62Encode(entry.getKey(), entry.getValue().length() + 4);
+        assertThat(s).isEqualTo("0000" + entry.getValue());
     }
 
     @Theory
     public void encodeWithSameLengthPadding(final Entry<byte[], String> entry) {
-        final String s = Base62.base62Encode(entry.getKey(), entry.getValue().length());
-        assertThat(s, is(entry.getValue()));
+        final String s = base62Encode(entry.getKey(), entry.getValue().length());
+        assertThat(s).isEqualTo(entry.getValue());
     }
 
     @Theory
     public void encodeWithPaddingToSmall(final Entry<byte[], String> entry) {
-        final String s = Base62.base62Encode(entry.getKey(), entry.getValue().length() - 4);
-        assertThat(s, is(entry.getValue()));
+        final String s = base62Encode(entry.getKey(), entry.getValue().length() - 4);
+        assertThat(s).isEqualTo(entry.getValue());
     }
 
     @Theory
     public void decode(final Entry<byte[], String> entry) {
-        final byte[] bytes = Base62.base62Decode(entry.getValue());
-        assertThat(bytes, is(entry.getKey()));
+        final byte[] bytes = base62Decode(entry.getValue());
+        assertThat(bytes).isEqualTo(entry.getKey());
     }
 
     @Theory
     public void decodeWithPadding(final Entry<byte[], String> entry) {
-        final byte[] bytes = Base62.base62Decode("0000" + entry.getValue());
-        assertThat(bytes, is(entry.getKey()));
+        final byte[] bytes = base62Decode("0000" + entry.getValue());
+        assertThat(bytes).isEqualTo(entry.getKey());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void decodeWithInvalidCharacters() {
-        Base62.base62Decode("01-AB*ab");
+        base62Decode("01-AB*ab");
     }
 
     @Theory
     public void encodeDecode(final Entry<byte[], String> entry) {
-        byte[] bytes = Base62.base62Decode(Base62.base62Encode(entry.getKey()));
-        assertThat(bytes, is(entry.getKey()));
-
-        bytes = Base62.base62Decode(Base62.base62Encode(entry.getKey(), entry.getValue().length() + 4));
-        assertThat(bytes, is(entry.getKey()));
+        assertThat(base62Decode(base62Encode(entry.getKey()))).isEqualTo(entry.getKey());
+        assertThat(base62Decode(base62Encode(entry.getKey(), entry.getValue().length() + 4))).isEqualTo(entry.getKey());
     }
-
 }
