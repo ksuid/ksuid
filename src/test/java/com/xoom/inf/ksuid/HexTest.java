@@ -5,9 +5,7 @@ import org.junit.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HexTest {
     private static final String PLAIN_TEXT = "The quick brown fox jumps over the lazy dog";
@@ -22,22 +20,22 @@ public class HexTest {
 
     @Test
     public void characterSet() {
-        assertThat(Hex.HEX_CHARACTERS, is("0123456789ABCDEF".toCharArray()));
+        assertThat(Hex.HEX_CHARACTERS).isEqualTo("0123456789ABCDEF".toCharArray());
     }
 
     @Test
     public void hexDecode() {
-        assertThat(Hex.hexDecode(HEX), is(PLAIN_TEXT.getBytes()));
+        assertThat(Hex.hexDecode(HEX)).isEqualTo(PLAIN_TEXT.getBytes());
     }
 
     @Test
     public void hexDecodeCaseInsensitive() {
-        assertThat(Hex.hexDecode(HEX.toLowerCase()), is(PLAIN_TEXT.getBytes()));
+        assertThat(Hex.hexDecode(HEX.toLowerCase())).isEqualTo(PLAIN_TEXT.getBytes());
     }
 
     @Test
     public void hexDecodeNull() {
-        assertThat(Hex.hexDecode(null), is(nullValue()));
+        assertThat(Hex.hexDecode(null)).isNull();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -52,12 +50,11 @@ public class HexTest {
 
     @Test
     public void hexEncode() {
-        assertThat(Hex.hexEncode(PLAIN_TEXT.getBytes()), is(HEX));
+        assertThat(Hex.hexEncode(PLAIN_TEXT.getBytes())).isEqualTo(HEX);
     }
 
     @Test
     public void hexEncodeNull() {
-        assertThat(Hex.hexEncode(null), is(nullValue()));
+        assertThat(Hex.hexEncode(null)).isNull();
     }
-
 }

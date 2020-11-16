@@ -1,12 +1,10 @@
 package com.xoom.inf.ksuid;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import java.security.SecureRandom;
@@ -20,8 +18,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @RunWith(Theories.class)
 public class KsuidTest {
@@ -47,74 +45,71 @@ public class KsuidTest {
             Ksuid.newBuilder().withTimestamp(TIMESTAMP).withPayload(PAYLOAD_BYTES).build()
     };
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Theory
     public void asBytes(final Ksuid ksuid) {
-        assertThat(ksuid.asBytes(), is(KSUID_BYTES));
+        assertThat(ksuid.asBytes()).isEqualTo(KSUID_BYTES);
     }
 
     @Theory
     public void asString(final Ksuid ksuid) {
-        assertThat(ksuid.asString(), is(KSUID_STRING));
+        assertThat(ksuid.asString()).isEqualTo(KSUID_STRING);
     }
 
     @Theory
     public void asRaw(final Ksuid ksuid) {
-        assertThat(ksuid.asRaw(), is(KSUID_RAW));
+        assertThat(ksuid.asRaw()).isEqualTo(KSUID_RAW);
     }
 
     @Theory
     public void getInstant(final Ksuid ksuid) {
-        assertThat(ksuid.getInstant(), is(Instant.ofEpochSecond((long) TIMESTAMP + EPOCH)));
+        assertThat(ksuid.getInstant()).isEqualTo(Instant.ofEpochSecond(TIMESTAMP + EPOCH));
     }
 
     @Theory
     public void getTime(final Ksuid ksuid) {
-        assertThat(ksuid.getTime(), is(TIME));
+        assertThat(ksuid.getTime()).isEqualTo(TIME);
     }
 
     @Theory
     public void getTimeInZone(final Ksuid ksuid) {
-        assertThat(ksuid.getTime(ZoneId.of("UTC")), is(TIME_UTC));
+        assertThat(ksuid.getTime(ZoneId.of("UTC"))).isEqualTo(TIME_UTC);
     }
 
     @Theory
     public void getTimestamp(final Ksuid ksuid) {
-        assertThat(ksuid.getTimestamp(), is(TIMESTAMP));
+        assertThat(ksuid.getTimestamp()).isEqualTo(TIMESTAMP);
     }
 
     @Theory
     public void getPayload(final Ksuid ksuid) {
-        assertThat(ksuid.getPayload(), is(PAYLOAD_RAW));
+        assertThat(ksuid.getPayload()).isEqualTo(PAYLOAD_RAW);
     }
 
     @Theory
     public void toInspectString(final Ksuid ksuid) {
         final String s = String.format("REPRESENTATION:%n%n  String: %1$s%n     Raw: %2$s%n%nCOMPONENTS:%n%n       Time: %3$s%n  Timestamp: %4$d%n    Payload: %5$s%n",
                                        KSUID_STRING, KSUID_RAW, TIME, TIMESTAMP, PAYLOAD_RAW);
-        assertThat(ksuid.toInspectString(), is(s));
+        assertThat(ksuid.toInspectString()).isEqualTo(s);
     }
 
     @Theory
     public void testToString(final Ksuid ksuid) {
-        assertThat(ksuid.toString(), is("Ksuid[timestamp = " + TIMESTAMP +
-                                                ", payload = [-75, -95, -51, 52, -75, -7, -99, 17, 84, -5, 104, 83, 52, 92, -105, 53]" +
-                                                ", ksuidBytes = [6, 105, -9, -17, -75, -95, -51, 52, -75, -7, -99, 17, 84, -5, 104, 83, 52, 92, -105, 53]]"));
+        assertThat(ksuid.toString()).isEqualTo("Ksuid[timestamp = " + TIMESTAMP +
+                                                       ", payload = [-75, -95, -51, 52, -75, -7, -99, 17, 84, -5, 104, 83, 52, 92, -105, 53]" +
+                                                       ", ksuidBytes = [6, 105, -9, -17, -75, -95, -51, 52, -75, -7, -99, 17, 84, -5, 104, 83, 52, 92, -105, 53]]");
     }
 
     @Test
     public void equalsAndHashcode() {
         EqualsVerifier.forClass(Ksuid.class).verify();
-        assertThat(KSUIDS[0], is(KSUIDS[1]));
-        assertThat(KSUIDS[1], is(KSUIDS[2]));
+        assertThat(KSUIDS[0]).isEqualTo(KSUIDS[1]);
+        assertThat(KSUIDS[1]).isEqualTo(KSUIDS[2]);
     }
 
     @Test
     public void comparableIsConsistentWithEquals() {
-        assertThat(KSUIDS[0].compareTo(KSUIDS[1]), is(0));
-        assertThat(KSUIDS[1].compareTo(KSUIDS[2]), is(0));
+        assertThat(KSUIDS[0].compareTo(KSUIDS[1])).isEqualTo(0);
+        assertThat(KSUIDS[1].compareTo(KSUIDS[2])).isEqualTo(0);
     }
 
     @Test
@@ -133,30 +128,27 @@ public class KsuidTest {
             Collections.shuffle(list);
         }
         Collections.sort(list);
-        assertThat(list, is(orderedList));
+        assertThat(list).isEqualTo(orderedList);
     }
 
     @Theory
     public void constructWithIncorrectPayloadSize(final int incorrectSize) {
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("payload is not expected length of 16 bytes");
-        Ksuid.newBuilder().withTimestamp(TIMESTAMP).withPayload(new byte[incorrectSize]).build();
+        assertThatCode(() -> Ksuid.newBuilder().withTimestamp(TIMESTAMP).withPayload(new byte[incorrectSize]).build())
+                .hasStackTraceContaining("payload is not expected length of 16 bytes");
     }
 
     @Theory
     public void constructWithIncorrectKsuidBytesSize(final int incorrectSize) {
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("ksuid is not expected length of 20 bytes");
-        Ksuid.newBuilder().withKsuidBytes(new byte[incorrectSize]).build();
+        assertThatCode(() -> Ksuid.newBuilder().withKsuidBytes(new byte[incorrectSize]).build())
+                .hasStackTraceContaining("ksuid is not expected length of 20 bytes");
     }
 
     @Theory
     public void constructWithIncorrectKsuidStringSize(final int incorrectSize) {
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("ksuid is not expected length of 20 bytes");
-        Ksuid.newBuilder()
-             .withKsuidString(IntStream.range(0, incorrectSize).mapToObj(i -> "a").collect(joining()))
-             .build();
+        assertThatCode(() -> {
+            Ksuid.newBuilder()
+                 .withKsuidString(IntStream.range(0, incorrectSize).mapToObj(i -> "a").collect(joining()))
+                 .build();
+        }).hasStackTraceContaining("ksuid is not expected length of 20 bytes");
     }
-
 }
