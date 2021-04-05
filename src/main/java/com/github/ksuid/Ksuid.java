@@ -1,4 +1,4 @@
-package com.xoom.inf.ksuid;
+package com.github.ksuid;
 
 import java.nio.ByteBuffer;
 import java.time.Instant;
@@ -8,9 +8,9 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-import static com.xoom.inf.ksuid.Base62.base62Decode;
-import static com.xoom.inf.ksuid.Base62.base62Encode;
-import static com.xoom.inf.ksuid.Hex.hexEncode;
+import static com.github.ksuid.Base62.base62Decode;
+import static com.github.ksuid.Base62.base62Encode;
+import static com.github.ksuid.Hex.hexEncode;
 
 /**
  * A K-Sortable Globally Unique ID (KSUID).

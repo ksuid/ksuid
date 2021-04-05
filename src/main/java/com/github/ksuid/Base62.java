@@ -1,4 +1,4 @@
-package com.xoom.inf.ksuid;
+package com.github.ksuid;
 
 import java.math.BigInteger;
 import java.util.stream.IntStream;

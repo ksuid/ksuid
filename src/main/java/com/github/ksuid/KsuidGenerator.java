@@ -1,12 +1,12 @@
-package com.xoom.inf.ksuid;
+package com.github.ksuid;
 
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import static com.xoom.inf.ksuid.Ksuid.EPOCH;
-import static com.xoom.inf.ksuid.Ksuid.PAYLOAD_BYTES;
+import static com.github.ksuid.Ksuid.EPOCH;
+import static com.github.ksuid.Ksuid.PAYLOAD_BYTES;
 
 /**
  * Generate K-Sortable Globally Unique IDs (KSUID).

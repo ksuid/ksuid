@@ -1,4 +1,4 @@
-package com.xoom.inf.ksuid;
+package com.github.ksuid;
 
 /**
  * Utility class to encode/decode bytes into hexadecimal strings.

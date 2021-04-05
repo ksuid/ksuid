@@ -1,4 +1,4 @@
-package com.xoom.inf.ksuid;
+package com.github.ksuid;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;

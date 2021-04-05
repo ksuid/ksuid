@@ -1,4 +1,4 @@
-package com.xoom.inf.ksuid;
+package com.github.ksuid;
 
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoint;
@@ -12,10 +12,10 @@ import java.math.BigInteger;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
-import static com.xoom.inf.ksuid.Base62.BASE;
-import static com.xoom.inf.ksuid.Base62.BASE_62_CHARACTERS;
-import static com.xoom.inf.ksuid.Base62.base62Decode;
-import static com.xoom.inf.ksuid.Base62.base62Encode;
+import static com.github.ksuid.Base62.BASE;
+import static com.github.ksuid.Base62.BASE_62_CHARACTERS;
+import static com.github.ksuid.Base62.base62Decode;
+import static com.github.ksuid.Base62.base62Encode;
 import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
 

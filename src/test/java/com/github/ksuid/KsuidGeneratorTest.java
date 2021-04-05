@@ -1,4 +1,4 @@
-package com.xoom.inf.ksuid;
+package com.github.ksuid;
 
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
