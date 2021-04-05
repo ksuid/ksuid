@@ -1,0 +1,28 @@
+# Mac OSX system files
+.DS_Store
+.localized
+
+# In case files are copied from SVN
+.svn/
+
+# Maven build files
+target/
+
+# Temporary files
+*~
+
+# Log files
+*.log
+
+# Java artifacts
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+*.rdb
