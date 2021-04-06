@@ -244,6 +244,10 @@
                     <failOnNoGitDirectory>false</failOnNoGitDirectory>
                     <excludeProperties>
                         <excludeProperty>git.user.*</excludeProperty>
+                        <excludeProperty>git.build.host</excludeProperty>
+                        <excludeProperty>git.build.user.*</excludeProperty>
+                        <excludeProperty>git.commit.message.*</excludeProperty>
+                        <excludeProperty>git.commit.user.*</excludeProperty>
                     </excludeProperties>
                 </configuration>
             </plugin>

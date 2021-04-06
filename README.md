@@ -1,5 +1,8 @@
 # ksuid
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.ksuid/ksuid/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.ksuid/ksuid)
+[![Javadoc](https://javadoc.io/badge2/com.github.ksuid/ksuid/javadoc.svg)](https://javadoc.io/doc/com.github.ksuid/ksuid)
+
 This is a Java port of [Segment's K-Sortable Globally Unique IDs](https://github.com/segmentio/ksuid).
 
 KSUID is for K-Sortable Unique IDentifier. It's a way to generate globally unique IDs similar to RFC 4122 UUIDs,
@@ -10,9 +13,29 @@ For the story of how KSUIDs came about, see [A brief history of the UUID](https:
 
 ## Usage
 
-Create a `KsuidGenerator` with a `SecureRandom` and get a new `Ksuid` for use.
+Add the library to maven pom.xml (or the equivalent in your build system):
 
-Note that a `KsuidGenerator` is threadsafe and a `Ksuid` is immutable (and therefore threadsafe).
+```xml
+<dependency>
+    <groupId>com.github.ksuid</groupId>
+    <artifactId>ksuid</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+Then simply generate a ksuid string like this:
+
+```java
+String ksuid = KsuidGenerator.generate();
+System.out.println(ksuid); // prints 1HCpXwx2EK9oYluWbacgeCnFcLf
+
+```
+
+&nbsp;
+
+For more complex use cases, create a `KsuidGenerator` with a `SecureRandom` and get a new `Ksuid` for use.
+
+Note that `KsuidGenerator` is threadsafe and `Ksuid` is immutable (and therefore threadsafe).
 
 ```java
 // Construct a new KsuidGenerator object. Since it is threadsafe you only need one.
@@ -80,5 +103,5 @@ The output from the code block above is
 10,000,000 in 6,665 ms. rate = 1,500/ms
 ```
 
-## Contributors
-* `rlubbat@paypal.com` Ramsey Lubbat
+## License
+This library is Open Source software released under the [MIT license](https://opensource.org/licenses/MIT).
