@@ -78,16 +78,16 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     /**
-     * Get the KSUID as a string.
+     * Get the KSUID as a display string. e.g. <code>0ujtsYcgvSTl8PAuAdqWYSMnLOv</code>
      *
-     * @return KSUID string
+     * @return KSUID display string
      */
     public String asString() {
         return base62Encode(ksuidBytes, PAD_TO_LENGTH);
     }
 
     /**
-     * Get the KSUID as a hex string.
+     * Get the KSUID as a hex string. e.g. <code>0669F7EFB5A1CD34B5F99D1154FB6853345C9735</code>
      *
      * @return KSUID hex string
      */
@@ -105,7 +105,7 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     /**
-     * Get the KSUID time component in the system default timezone.
+     * Get the KSUID time component in the system default timezone. e.g. <code>2017-10-09 21:00:47 -0700 PDT</code>
      *
      * @return KSUID time component string
      */
@@ -114,7 +114,7 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     /**
-     * Get the KSUID time component in the provided timezone.
+     * Get the KSUID time component in the provided timezone. e.g. <code>2017-10-10 04:00:47 +0000 UTC</code>
      *
      * @param zoneId the timezone
      * @return KSUID time component string
@@ -133,7 +133,7 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     /**
-     * Get the KSUID payload component.
+     * Get the KSUID payload component. e.g. <code>B5A1CD34B5F99D1154FB6853345C9735</code>
      *
      * @return KSUID payload component
      */
@@ -142,7 +142,19 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     /**
-     * Get the KSUID inspect formatting string representation.
+     * Get the KSUID inspect formatting string representation. e.g.
+     * <pre>
+     *  REPRESENTATION:
+     *  
+     *    String: 0ujtsYcgvSTl8PAuAdqWYSMnLOv
+     *       Raw: 0669F7EFB5A1CD34B5F99D1154FB6853345C9735
+     *  
+     *  COMPONENTS:
+     *  
+     *         Time: 2017-10-09 21:00:47 -0700 PDT
+     *    Timestamp: 107608047
+     *      Payload: B5A1CD34B5F99D1154FB6853345C9735
+     * </pre>
      *
      * @return KSUID inspect formatting string
      */
@@ -175,9 +187,18 @@ public class Ksuid implements Comparable<Ksuid> {
         return result;
     }
 
+    /**
+     * Get toString representation. e.g.
+     * <pre>
+     * Ksuid[asString = 0ujtsYcgvSTl8PAuAdqWYSMnLOv, timestamp = 107608047, payload = [-75, ...], ksuidBytes = [6, ...]]
+     * </pre>
+     * 
+     * @see {@link #asString()}
+     */
     @Override
     public String toString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
+                .add("asString = " + asString())
                 .add("timestamp = " + timestamp)
                 .add("payload = " + Arrays.toString(payload))
                 .add("ksuidBytes = " + Arrays.toString(ksuidBytes))

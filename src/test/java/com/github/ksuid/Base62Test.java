@@ -9,8 +9,10 @@ import org.junit.runner.RunWith;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.time.Instant;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import static com.github.ksuid.Base62.BASE;
 import static com.github.ksuid.Base62.BASE_62_CHARACTERS;
@@ -99,5 +101,16 @@ public class Base62Test {
     public void encodeDecode(final Entry<byte[], String> entry) {
         assertThat(base62Decode(base62Encode(entry.getKey()))).isEqualTo(entry.getKey());
         assertThat(base62Decode(base62Encode(entry.getKey(), entry.getValue().length() + 4))).isEqualTo(entry.getKey());
+    }
+    
+    @Test
+    public void testBase62EncodeUnsigned() {
+        final Random random = new Random();
+        random.setSeed(123L);
+
+        final Instant timestamp = Instant.parse("2083-01-27T08:18:32.577Z");
+        final Ksuid ksuid = new KsuidGenerator(random).newKsuid(timestamp);
+        final byte[] ksuidBytes = ksuid.asBytes();
+        assertThat(Base62.base62Encode(ksuidBytes, 27)).isEqualTo("IRIRk6W1GtAY07Hp2RJ1blLjvEo");
     }
 }
