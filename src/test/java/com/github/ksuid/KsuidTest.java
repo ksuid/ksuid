@@ -94,7 +94,8 @@ public class KsuidTest {
 
     @Theory
     public void testToString(final Ksuid ksuid) {
-        assertThat(ksuid.toString()).isEqualTo("Ksuid[timestamp = " + TIMESTAMP +
+        assertThat(ksuid.toString()).isEqualTo("Ksuid[asString = 0ujtsYcgvSTl8PAuAdqWYSMnLOv"  + 
+                                                       ", timestamp = " + TIMESTAMP +
                                                        ", payload = [-75, -95, -51, 52, -75, -7, -99, 17, 84, -5, 104, 83, 52, 92, -105, 53]" +
                                                        ", ksuidBytes = [6, 105, -9, -17, -75, -95, -51, 52, -75, -7, -99, 17, 84, -5, 104, 83, 52, 92, -105, 53]]");
     }
