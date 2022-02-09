@@ -51,8 +51,25 @@ public class KsuidTest {
     }
 
     @Theory
+    @SuppressWarnings("deprecation")
     public void asString(final Ksuid ksuid) {
         assertThat(ksuid.asString()).isEqualTo(KSUID_STRING);
+    }
+    
+    @Theory
+    public void toString(final Ksuid ksuid) {
+        assertThat(ksuid.toString()).isEqualTo(KSUID_STRING);
+    }
+
+    @Theory
+    public void fromString(final Ksuid ksuid) {
+        final String ksuidString = ksuid.toString();
+        assertThat(Ksuid.fromString(ksuidString)).isEqualTo(ksuid);
+    }
+    
+    @Test
+    public void testNewKsuid() {
+        assertThat(Ksuid.newKsuid()).isNotNull();
     }
 
     @Theory
@@ -93,8 +110,8 @@ public class KsuidTest {
     }
 
     @Theory
-    public void testToString(final Ksuid ksuid) {
-        assertThat(ksuid.toString()).isEqualTo("Ksuid[asString = 0ujtsYcgvSTl8PAuAdqWYSMnLOv"  + 
+    public void testToLogString(final Ksuid ksuid) {
+        assertThat(ksuid.toLogString()).isEqualTo("Ksuid[string = 0ujtsYcgvSTl8PAuAdqWYSMnLOv"  +
                                                        ", timestamp = " + TIMESTAMP +
                                                        ", payload = [-75, -95, -51, 52, -75, -7, -99, 17, 84, -5, 104, 83, 52, 92, -105, 53]" +
                                                        ", ksuidBytes = [6, 105, -9, -17, -75, -95, -51, 52, -75, -7, -99, 17, 84, -5, 104, 83, 52, 92, -105, 53]]");

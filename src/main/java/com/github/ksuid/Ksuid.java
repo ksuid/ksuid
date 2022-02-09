@@ -69,6 +69,33 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     /**
+     * Static factory to retrieve a new Ksuid.
+     *
+     * The {@code Ksuid} is generated using a cryptographically strong pseudo
+     * random number generator.
+     *
+     * @return  A randomly generated {@code Ksuid}
+     */
+    public static Ksuid newKsuid() {
+        return KsuidGenerator.createKsuid();
+    }
+    
+    /**
+     * Creates a {@code Ksuid} from the string standard representation as
+     * described in the {@link #toString} method.
+     * 
+     * @param  ksuidString
+     *         A string that specifies a {@code Ksuid}
+     *
+     * @return  A {@code Ksuid} with the specified value
+     */
+    public static Ksuid fromString(final String ksuidString) {
+        return new Builder()
+                .withKsuidString(ksuidString)
+                .build();
+    }
+
+    /**
      * Get the KSUID as a byte array.
      *
      * @return KSUID bytes
@@ -78,12 +105,14 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     /**
-     * Get the KSUID as a display string. e.g. <code>0ujtsYcgvSTl8PAuAdqWYSMnLOv</code>
+     * Returns a {@code String} object representing this {@code Ksuid}. <code>0ujtsYcgvSTl8PAuAdqWYSMnLOv</code>
      *
-     * @return KSUID display string
+     * @return  A string representation of this {@code Ksuid}
+     * @deprecated Use {@link #toString()}. Retained for backward-compatibility
      */
+    @Deprecated
     public String asString() {
-        return base62Encode(ksuidBytes, PAD_TO_LENGTH);
+        return toString();
     }
 
     /**
@@ -160,7 +189,25 @@ public class Ksuid implements Comparable<Ksuid> {
      */
     public String toInspectString() {
         return String.format("REPRESENTATION:%n%n  String: %1$s%n     Raw: %2$s%n%nCOMPONENTS:%n%n       Time: %3$s%n  Timestamp: %4$d%n    Payload: %5$s%n",
-                             asString(), asRaw(), getTime(), getTimestamp(), getPayload());
+                             toString(), asRaw(), getTime(), getTimestamp(), getPayload());
+    }
+
+    /**
+     * Get string representation suitable for logging. e.g.
+     * <pre>
+     * Ksuid[asString = 0ujtsYcgvSTl8PAuAdqWYSMnLOv, timestamp = 107608047, payload = [-75, ...], ksuidBytes = [6, ...]]
+     * </pre>
+     * 
+     * @return KSUID log string
+     * @see #toString()
+     */
+    public String toLogString() {
+        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
+                .add("string = " + toString())
+                .add("timestamp = " + timestamp)
+                .add("payload = " + Arrays.toString(payload))
+                .add("ksuidBytes = " + Arrays.toString(ksuidBytes))
+                .toString();
     }
 
     @Override
@@ -188,21 +235,13 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     /**
-     * Get toString representation. e.g.
-     * <pre>
-     * Ksuid[asString = 0ujtsYcgvSTl8PAuAdqWYSMnLOv, timestamp = 107608047, payload = [-75, ...], ksuidBytes = [6, ...]]
-     * </pre>
-     * 
-     * @see #asString()
+     * Returns a {@code String} object representing this {@code Ksuid}. <code>0ujtsYcgvSTl8PAuAdqWYSMnLOv</code>
+     *
+     * @return  A string representation of this {@code Ksuid}
      */
     @Override
     public String toString() {
-        return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
-                .add("asString = " + asString())
-                .add("timestamp = " + timestamp)
-                .add("payload = " + Arrays.toString(payload))
-                .add("ksuidBytes = " + Arrays.toString(ksuidBytes))
-                .toString();
+        return base62Encode(ksuidBytes, PAD_TO_LENGTH);
     }
 
     @Override
