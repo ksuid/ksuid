@@ -28,7 +28,7 @@ sudo mv ksuid-1.1.0-cli.jar /usr/local/bin/ksuid
 sudo chmod +x /usr/local/bin/ksuid
 
 ksuid
-# prints 24ramwZGJWcNj7ic0YEFyViN3FB
+# prints 1HCpXwx2EK9oYluWbacgeCnFcLf
 ```
 
 ## Usage as library
