@@ -193,7 +193,7 @@ public class Ksuid implements Comparable<Ksuid> {
      * Ksuid[asString = 0ujtsYcgvSTl8PAuAdqWYSMnLOv, timestamp = 107608047, payload = [-75, ...], ksuidBytes = [6, ...]]
      * </pre>
      * 
-     * @see {@link #asString()}
+     * @see #asString()
      */
     @Override
     public String toString() {
