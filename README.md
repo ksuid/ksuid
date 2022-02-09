@@ -23,8 +23,8 @@ For the story of how KSUIDs came about, see [A brief history of the UUID](https:
 To use this as a command-line program on Unix-like systems, run
 
 ```bash
-wget https://repo1.maven.org/maven2/com/github/ksuid/ksuid/1.1.0/ksuid-1.1.0-app.jar
-sudo ksuid-1.0.1-app.jar /usr/local/bin/ksuid
+wget https://repo1.maven.org/maven2/com/github/ksuid/ksuid/1.1.0/ksuid-1.1.0-cli.jar
+sudo mv ksuid-1.1.0-cli.jar /usr/local/bin/ksuid
 sudo chmod +x /usr/local/bin/ksuid
 
 ksuid
