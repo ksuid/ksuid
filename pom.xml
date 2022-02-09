@@ -36,7 +36,6 @@
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-        <spring-boot-maven-plugin.version>2.4.4</spring-boot-maven-plugin.version>
 
         <!-- Specify all SonarQube code coverage reports - default does not pick up integration tests -->
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -297,22 +296,6 @@
                         </bannedDependencies>
                     </rules>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-info</goal>
-                        </goals>
-                        <configuration>
-                            <outputFile>${project.build.outputDirectory}/META-INF/build-info-${project.artifactId}.properties</outputFile>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
             <!-- https://maven.apache.org/plugins/maven-jar-plugin/ -->

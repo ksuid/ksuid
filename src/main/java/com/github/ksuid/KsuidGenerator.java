@@ -23,14 +23,21 @@ public class KsuidGenerator {
     private final Supplier<byte[]> payloadSupplier;
 
     /**
-     * Generate a new KSUID
+     * Generate a new KSUID string representation
      * 
+     * The {@code Ksuid} is generated using a cryptographically strong pseudo
+     * random number generator.
+     *
      * @return string representation of new KSUID
      */
     public static String generate() {
-        return INSTANCE.newKsuid().asString();
+        return createKsuid().toString();
     }
-    
+
+    static Ksuid createKsuid() {
+        return INSTANCE.newKsuid();
+    }
+
     /**
      * Construct a KSUID generator.
      *

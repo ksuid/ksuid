@@ -33,7 +33,7 @@ Add the library to maven pom.xml (or the equivalent in your build system):
 Then simply generate a ksuid string like this:
 
 ```java
-String ksuid = KsuidGenerator.generate();
+String ksuid = Ksuid.newKsuid().toString();
 System.out.println(ksuid); // prints 1HCpXwx2EK9oYluWbacgeCnFcLf
 
 ```
@@ -51,23 +51,26 @@ private static final KsuidGenerator KSUID_GENERATOR = new KsuidGenerator(new Sec
 // Get a new Ksuid object.
 final Ksuid ksuid = ksuidGenerator.newKsuid();
 
-// The toString() method is the string representation of the object.
+// The toString() method is the string representation of KSUID.
 System.out.println("ksuid:\n" + ksuid  + "\n");
 
-// The string format is the KSUID represenation.
-System.out.println("ksuid.asString():\n" + ksuid.asString() + "\n");
+// The log string format shows some details on one line, suitable for logging.
+System.out.println("ksuid.toLogString():\n" + ksuid.toLogString() + "\n");
 
 // The inspect string format shows details.
 System.out.println("ksuid.toInspectString():\n" + ksuid.toInspectString());
 
 ```
 The output from the code block above is
+
 ```
 ksuid:
-Ksuid[timestamp = 150215977, payload = [124, 76, 43, -110, 116, -6, -91, 45, 0, -125, -127, 109, 28, 24, 28, -17], ksuidBytes = [8, -12, 29, 41, 124, 76, 43, -110, 116, -6, -91, 45, 0, -125, -127, 109, 28, 24, 28, -17]]
-
-ksuid.asString():
 1HCpXwx2EK9oYluWbacgeCnFcLf
+
+ksuid.toLogString():
+Ksuid[timestamp = 150215977, string = 1HCpXwx2EK9oYluWbacgeCnFcLf payload = [124, 76, 43, -110, 116, -6, \
+    -91, 45, 0, -125, -127, 109, 28, 24, 28, -17], ksuidBytes = [8, -12, 29, 41, 124, 76, 43, -110, 116, \
+    -6, -91, 45, 0, -125, -127, 109, 28, 24, 28, -17]]
 
 ksuid.toInspectString():
 REPRESENTATION:
