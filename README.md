@@ -39,7 +39,7 @@ Add the library to maven pom.xml (or the equivalent in your build system):
 <dependency>
     <groupId>com.github.ksuid</groupId>
     <artifactId>ksuid</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
