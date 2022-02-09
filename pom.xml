@@ -36,6 +36,7 @@
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+        <spring-boot-maven-plugin.version>2.6.3</spring-boot-maven-plugin.version>
 
         <!-- Specify all SonarQube code coverage reports - default does not pick up integration tests -->
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -46,6 +47,7 @@
         <assertj-core.version>3.19.0</assertj-core.version>
         <equalsverifier.version>2.5.2</equalsverifier.version>
         <junit.version>4.13.2</junit.version>
+        <mockito.version>4.3.1</mockito.version>
     </properties>
 
     <licenses>
@@ -92,6 +94,14 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -296,6 +306,33 @@
                         </bannedDependencies>
                     </rules>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>cli</classifier>
+                            <executable>true</executable>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>build-info</id>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.outputDirectory}/META-INF/build-info-${project.artifactId}.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- https://maven.apache.org/plugins/maven-jar-plugin/ -->
