@@ -16,7 +16,6 @@ import static com.github.ksuid.Ksuid.PAYLOAD_BYTES;
  * <p>
  * See <a href="https://github.com/segmentio/ksuid">https://github.com/segmentio/ksuid</a>.
  */
-@SuppressWarnings("WeakerAccess")
 public class KsuidGenerator {
     private static final KsuidGenerator INSTANCE = new KsuidGenerator(new SecureRandom());
     

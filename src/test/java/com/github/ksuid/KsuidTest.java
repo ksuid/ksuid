@@ -1,6 +1,7 @@
 package com.github.ksuid;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.apache.commons.lang3.SerializationUtils;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
@@ -168,5 +169,12 @@ public class KsuidTest {
                  .withKsuidString(IntStream.range(0, incorrectSize).mapToObj(i -> "a").collect(joining()))
                  .build();
         }).hasStackTraceContaining("ksuid is not expected length of 20 bytes");
+    }
+    
+    @Test
+    public void testSerialization() {
+        final Ksuid ksuid = Ksuid.newKsuid();
+        final Ksuid copy = SerializationUtils.roundtrip(ksuid);
+        assertThat(copy).isEqualTo(ksuid);
     }
 }

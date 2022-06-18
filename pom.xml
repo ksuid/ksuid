@@ -45,6 +45,7 @@
 
         <!-- Dependency versions -->
         <assertj-core.version>3.19.0</assertj-core.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
         <equalsverifier.version>2.5.2</equalsverifier.version>
         <junit.version>4.13.2</junit.version>
         <mockito.version>4.3.1</mockito.version>
@@ -81,6 +82,13 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
