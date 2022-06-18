@@ -1,5 +1,6 @@
 package com.github.ksuid;
 
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -19,8 +20,7 @@ import static com.github.ksuid.Hex.hexEncode;
  * <p>
  * See <a href="https://github.com/segmentio/ksuid">https://github.com/segmentio/ksuid</a>.
  */
-@SuppressWarnings("WeakerAccess")
-public class Ksuid implements Comparable<Ksuid> {
+public class Ksuid implements Comparable<Ksuid>, Serializable {
     static final int EPOCH = 1400000000;
     public static final int PAYLOAD_BYTES = 16;
 
@@ -29,6 +29,8 @@ public class Ksuid implements Comparable<Ksuid> {
     private static final int PAD_TO_LENGTH = 27;
     private static final Comparator<Ksuid> COMPARATOR = Comparator.comparingInt(Ksuid::getTimestamp)
                                                                   .thenComparing(Ksuid::getPayload);
+
+    private static final long serialVersionUID = 3069563682618421304L;
 
     private final int timestamp;
     private final byte[] payload;
@@ -245,7 +247,8 @@ public class Ksuid implements Comparable<Ksuid> {
     }
 
     @Override
-    public int compareTo(@SuppressWarnings("NullableProblems") final Ksuid other) {
+    public int compareTo(final Ksuid other) {
+        Objects.requireNonNull(other, "other ksuid must not be null");
         return COMPARATOR.compare(this, other);
     }
 
