@@ -4,7 +4,7 @@
 
     <groupId>com.github.ksuid</groupId>
     <artifactId>ksuid</artifactId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>1.1.2</version>
     <packaging>jar</packaging>
     <name>ksuid</name>
     
@@ -64,7 +64,7 @@
         <connection>scm:git:git://github.com/ksuid/ksuid.git</connection>
         <developerConnection>scm:git:https://github.com/ksuid/ksuid.git</developerConnection>
         <url>http://github.com/ksuid/ksuid/tree/master</url>
-        <tag>HEAD</tag>
+        <tag>ksuid-1.1.2</tag>
     </scm>
     
     <developers>
