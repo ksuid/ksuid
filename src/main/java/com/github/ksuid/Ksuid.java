@@ -98,6 +98,20 @@ public class Ksuid implements Comparable<Ksuid>, Serializable {
     }
 
     /**
+     * Creates a {@code Ksuid} with a timestamp component derived from the given Innstant
+     * and random bytes provided by a cryptographically strong pseudo random number generator.
+     *
+     * @param  instant
+     *         timestamp for Ksuid
+     *
+     * @return  A {@code Ksuid} with the specified value
+     */
+    public static Ksuid fromInstant(final Instant instant) {
+        return KsuidGenerator.getInstance()
+                .newKsuid(instant);
+    }
+
+    /**
      * Get the KSUID as a byte array.
      *
      * @return KSUID bytes

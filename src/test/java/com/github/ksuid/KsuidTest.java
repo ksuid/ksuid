@@ -13,6 +13,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -66,6 +67,22 @@ public class KsuidTest {
     public void fromString(final Ksuid ksuid) {
         final String ksuidString = ksuid.toString();
         assertThat(Ksuid.fromString(ksuidString)).isEqualTo(ksuid);
+    }
+    
+    @Theory
+    public void fromInstant(final Ksuid ksuid) {
+        final Instant instant = ksuid.getInstant();
+        final Ksuid ksuidCopy = Ksuid.fromInstant(instant);
+        assertThat(ksuidCopy.getInstant()).isEqualTo(instant);
+        assertThat(ksuidCopy.getPayload()).isNotEqualTo(ksuid.getPayload());
+    }
+
+    @Test
+    public void fromInstantNewTimestamp() {
+        final Instant instant = Instant.now();
+        final Ksuid ksuid = Ksuid.fromInstant(instant);
+        final Instant instantCopy = ksuid.getInstant();
+        assertThat(instant.truncatedTo(ChronoUnit.SECONDS)).isEqualTo(instantCopy);
     }
     
     @Test
