@@ -23,8 +23,8 @@ For the story of how KSUIDs came about, see [A brief history of the UUID](https:
 To use this as a command-line program on Unix-like systems, run
 
 ```bash
-wget https://repo1.maven.org/maven2/com/github/ksuid/ksuid/1.1.1/ksuid-1.1.1-cli.jar
-sudo mv ksuid-1.1.1-cli.jar /usr/local/bin/ksuid
+wget https://repo1.maven.org/maven2/com/github/ksuid/ksuid/1.1.2/ksuid-1.1.2-cli.jar
+sudo mv ksuid-1.1.2-cli.jar /usr/local/bin/ksuid
 sudo chmod +x /usr/local/bin/ksuid
 
 ksuid
@@ -39,7 +39,7 @@ Add the library to maven pom.xml (or the equivalent in your build system):
 <dependency>
     <groupId>com.github.ksuid</groupId>
     <artifactId>ksuid</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 </dependency>
 ```
 
@@ -89,13 +89,13 @@ ksuid.toInspectString():
 REPRESENTATION:
 
   String: 1HCpXwx2EK9oYluWbacgeCnFcLf
-     Raw: 08F41D297C4C2B9274FAA52D0083816D1C181CEF
+     Raw: 08F41D297C4C2B9274FAA52D0083816D1.1.2CEF
 
 COMPONENTS:
 
        Time: 2019-02-14 23:32:57 -0800 PST
   Timestamp: 150215977
-    Payload: 7C4C2B9274FAA52D0083816D1C181CEF
+    Payload: 7C4C2B9274FAA52D0083816D1.1.2CEF
 ```
 
 ## Performance
