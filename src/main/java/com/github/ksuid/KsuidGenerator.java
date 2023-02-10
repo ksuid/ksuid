@@ -33,6 +33,10 @@ public class KsuidGenerator {
         return createKsuid().toString();
     }
 
+    static KsuidGenerator getInstance() {
+        return INSTANCE;
+    }
+
     static Ksuid createKsuid() {
         return INSTANCE.newKsuid();
     }
