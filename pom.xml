@@ -21,22 +21,22 @@
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
 
         <!-- Plugin configuration -->
-        <git-commit-id-plugin.version>4.0.3</git-commit-id-plugin.version>
+        <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
         <gpg.skip>true</gpg.skip>
-        <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <jgitflow-maven-plugin.version>1.0-m5.1</jgitflow-maven-plugin.version>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss z</maven.build.timestamp.format>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-deploy-plugin.version>3.1.3</maven-deploy-plugin.version>
+        <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+        <maven-failsafe-plugin.version>3.5.0</maven-failsafe-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-        <spring-boot-maven-plugin.version>2.6.3</spring-boot-maven-plugin.version>
+        <spring-boot-maven-plugin.version>3.3.4</spring-boot-maven-plugin.version>
 
         <!-- Specify all SonarQube code coverage reports - default does not pick up integration tests -->
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -44,11 +44,11 @@
         <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
 
         <!-- Dependency versions -->
-        <assertj-core.version>3.19.0</assertj-core.version>
+        <assertj-core.version>3.26.3</assertj-core.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <equalsverifier.version>2.5.2</equalsverifier.version>
+        <equalsverifier.version>3.17.1</equalsverifier.version>
         <junit.version>4.13.2</junit.version>
-        <mockito.version>4.3.1</mockito.version>
+        <mockito.version>5.11.0</mockito.version>
     </properties>
 
     <licenses>
@@ -105,7 +105,7 @@
 
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
+            <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
@@ -117,7 +117,7 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>3.0.0-M1</version>
+                    <version>3.1.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -206,7 +206,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <source>1.8</source>
+                    <source>21</source>
                 </configuration>
                 <executions>
                     <execution>
@@ -371,15 +371,15 @@
                 </configuration>
             </plugin>
 
-            <!-- Compile code for 1.8 JVMs -->
+            <!-- Compile code for 21 JVMs -->
             <!-- https://maven.apache.org/plugins/maven-compiler-plugin/index.html -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>21</source>
+                    <target>21</target>
                     <parameters>true</parameters>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <showDeprecation>true</showDeprecation>
