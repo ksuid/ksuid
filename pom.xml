@@ -21,6 +21,7 @@
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
 
         <!-- Plugin configuration -->
+        <argLine></argLine>
         <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
         <gpg.skip>true</gpg.skip>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
@@ -206,7 +207,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <source>21</source>
+                    <source>1.8</source>
                 </configuration>
                 <executions>
                     <execution>
@@ -371,15 +372,15 @@
                 </configuration>
             </plugin>
 
-            <!-- Compile code for 21 JVMs -->
+            <!-- Compile code for 1.8 JVMs -->
             <!-- https://maven.apache.org/plugins/maven-compiler-plugin/index.html -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <parameters>true</parameters>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <showDeprecation>true</showDeprecation>
