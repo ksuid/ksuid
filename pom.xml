@@ -352,6 +352,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
+                            <Automatic-Module-Name>com.github.ksuid</Automatic-Module-Name>
                             <Implementation-Title>${project.artifactId}</Implementation-Title>
                             <Implementation-Version>${project.version}</Implementation-Version>
                         </manifestEntries>
