@@ -43,12 +43,19 @@ Add the library to maven pom.xml (or the equivalent in your build system):
 </dependency>
 ```
 
+If using JPMS, add the library to your `module-info.java`:
+
+```java
+requires com.github.ksuid;
+```
+
 Then simply generate a ksuid string like this:
 
 ```java
+import com.github.ksuid.Ksuid;
+...
 String ksuid = Ksuid.newKsuid().toString();
 System.out.println(ksuid); // prints 1HCpXwx2EK9oYluWbacgeCnFcLf
-
 ```
 
 &nbsp;
@@ -58,6 +65,9 @@ For more complex use cases, create a `KsuidGenerator` with a `SecureRandom` and 
 Note that `KsuidGenerator` is threadsafe and `Ksuid` is immutable (and therefore threadsafe).
 
 ```java
+import com.github.ksuid.KsuidGenerator;
+...
+
 // Construct a new KsuidGenerator object. Since it is threadsafe you only need one.
 private static final KsuidGenerator KSUID_GENERATOR = new KsuidGenerator(new SecureRandom());
 
