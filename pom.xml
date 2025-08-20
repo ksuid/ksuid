@@ -329,7 +329,6 @@
                         </goals>
                         <configuration>
                             <classifier>cli</classifier>
-                            <executable>true</executable>
                         </configuration>
                     </execution>
                     <execution>
