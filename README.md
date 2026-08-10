@@ -1,6 +1,6 @@
 # ksuid
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.ksuid/ksuid/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.ksuid/ksuid)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ksuid/ksuid)](https://central.sonatype.com/artifact/com.github.ksuid/ksuid)
 [![Javadoc](https://javadoc.io/badge2/com.github.ksuid/ksuid/javadoc.svg)](https://javadoc.io/doc/com.github.ksuid/ksuid)
 
 This is a Java port of [Segment's K-Sortable Globally Unique IDs](https://github.com/segmentio/ksuid).
