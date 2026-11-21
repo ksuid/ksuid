@@ -69,6 +69,30 @@ public class KsuidTest {
         assertThat(Ksuid.fromString(ksuidString)).isEqualTo(ksuid);
     }
     
+    @Test
+    public void fromStringNilAndMax() {
+        assertThat(Ksuid.fromString("000000000000000000000000000").asBytes()).isEqualTo(new byte[20]);
+
+        final byte[] max = new byte[20];
+        Arrays.fill(max, (byte) 0xFF);
+        assertThat(Ksuid.fromString("aWgEPTl1tmebfsQzFP4bxwgy80V").asBytes()).isEqualTo(max);
+    }
+
+    @Test
+    public void fromStringRoundTripsAnyLeadingByte() {
+        for (final int first : new int[] {0x00, 0x01, 0x7F, 0x80, 0xFF}) {
+            final byte[] bytes = Hex.hexDecode(KSUID_RAW);
+            bytes[0] = (byte) first;
+            final Ksuid ksuid = Ksuid.newBuilder().withKsuidBytes(bytes).build();
+            assertThat(Ksuid.fromString(ksuid.toString())).isEqualTo(ksuid);
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void fromStringAboveMax() {
+        Ksuid.fromString("aWgEPTl1tmebfsQzFP4bxwgy80W");
+    }
+
     @Theory
     public void fromInstant(final Ksuid ksuid) {
         final Instant instant = ksuid.getInstant();
@@ -185,7 +209,7 @@ public class KsuidTest {
             Ksuid.newBuilder()
                  .withKsuidString(IntStream.range(0, incorrectSize).mapToObj(i -> "a").collect(joining()))
                  .build();
-        }).hasStackTraceContaining("ksuid is not expected length of 20 bytes");
+        }).hasStackTraceContaining("ksuid string is not expected length of 27 characters");
     }
     
     @Test

@@ -93,6 +93,29 @@ final class Base62 {
                         .toByteArray();
     }
 
+    /**
+     * Decode a Base62 string into exactly {@code length} unsigned big-endian bytes.
+     * <p>
+     * Unlike {@link #base62Decode(String)}, the result keeps leading zero bytes and
+     * has no extra sign byte.
+     *
+     * @param s base62 string to decode
+     * @param length number of bytes to return
+     * @return decoded bytes, left-padded with zeros to {@code length}
+     * @throws IllegalArgumentException if the value does not fit in {@code length} bytes
+     */
+    static byte[] base62Decode(final String s, final int length) {
+        final BigInteger value = new BigInteger(1, base62Decode(s));
+        if (value.bitLength() > length * BYTE_BITS) {
+            throw new IllegalArgumentException("'" + s + "' does not fit in " + length + " bytes");
+        }
+        final byte[] bytes = value.toByteArray();
+        final int copied = Math.min(bytes.length, length);
+        final byte[] result = new byte[length];
+        System.arraycopy(bytes, bytes.length - copied, result, length - copied, copied);
+        return result;
+    }
+
     // VisibleForTesting
     static int indexOf(final char c) {
         if (c >= '0' && c <= '9') {

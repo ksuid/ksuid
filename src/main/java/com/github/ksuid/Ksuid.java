@@ -326,9 +326,15 @@ public class Ksuid implements Comparable<Ksuid>, Serializable {
          *
          * @param ksuidString the KSUID string
          * @return this builder
+         * @throws IllegalArgumentException if the string is not 27 characters long, has a
+         *         character outside the Base62 alphabet, or is above the largest KSUID
+         *         ({@code aWgEPTl1tmebfsQzFP4bxwgy80V})
          */
         public Builder withKsuidString(final String ksuidString) {
-            this.ksuidBytes = base62Decode(ksuidString);
+            if (ksuidString.length() != PAD_TO_LENGTH) {
+                throw new IllegalArgumentException("ksuid string is not expected length of " + PAD_TO_LENGTH + " characters");
+            }
+            this.ksuidBytes = base62Decode(ksuidString, TOTAL_BYTES);
             return this;
         }
 
