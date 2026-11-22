@@ -23,10 +23,10 @@ For the story of how KSUIDs came about, see [A brief history of the UUID](https:
 To use this as a command-line program on Unix-like systems, run
 
 ```bash
-wget https://repo1.maven.org/maven2/com/github/ksuid/ksuid/1.1.4/ksuid-1.1.4-cli.jar
-sudo mv ksuid-1.1.4-cli.jar /usr/local/bin/ksuid.jar
+wget https://repo1.maven.org/maven2/com/github/ksuid/ksuid/1.1.5/ksuid-1.1.5-cli.jar
+sudo mv ksuid-1.1.5-cli.jar /usr/local/bin/ksuid.jar
 
-wget https://github.com/ksuid/ksuid/raw/refs/tags/ksuid-1.1.4/ksuid.sh
+wget https://github.com/ksuid/ksuid/raw/refs/tags/ksuid-1.1.5/ksuid.sh
 sudo mv ksuid.sh /usr/local/bin/ksuid
 sudo chmod +x /usr/local/bin/ksuid
 
@@ -42,7 +42,7 @@ Add the library to maven pom.xml (or the equivalent in your build system):
 <dependency>
     <groupId>com.github.ksuid</groupId>
     <artifactId>ksuid</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
 </dependency>
 ```
 
