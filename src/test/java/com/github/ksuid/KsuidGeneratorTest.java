@@ -13,6 +13,7 @@ import static java.time.Instant.now;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RunWith(Theories.class)
 public class KsuidGeneratorTest {
@@ -36,6 +37,27 @@ public class KsuidGeneratorTest {
         ksuid = generator.newKsuid(instant);
         assertThat(ksuid).isNotNull();
         assertThat(ksuid.getInstant()).isEqualTo(instant.truncatedTo(SECONDS));
+    }
+
+    @Theory
+    public void newKsuidAtTimestampRangeBoundaries(final KsuidGenerator generator) {
+        final Instant min = Instant.parse("2014-05-13T16:53:20Z");
+        final Instant max = Instant.parse("2150-06-19T23:21:35Z");
+
+        assertThat(generator.newKsuid(min).getInstant()).isEqualTo(min);
+        assertThat(generator.newKsuid(max).getInstant()).isEqualTo(max);
+    }
+
+    @Theory
+    public void newKsuidRejectsInstantsOutsideTimestampRange(final KsuidGenerator generator) {
+        for (final Instant instant : new Instant[] {
+                Instant.parse("2014-05-13T16:53:19Z"),
+                Instant.parse("2000-01-01T00:00:00Z"),
+                Instant.parse("2150-06-19T23:21:36Z")}) {
+            assertThatThrownBy(() -> generator.newKsuid(instant))
+                    .isExactlyInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("instant must be between 2014-05-13T16:53:20Z and 2150-06-19T23:21:35Z (inclusive): " + instant);
+        }
     }
 
     @Theory

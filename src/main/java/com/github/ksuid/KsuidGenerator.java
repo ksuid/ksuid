@@ -18,6 +18,7 @@ import static com.github.ksuid.Ksuid.PAYLOAD_BYTES;
  */
 public class KsuidGenerator {
     private static final KsuidGenerator INSTANCE = new KsuidGenerator(new SecureRandom());
+    private static final long MAX_TIMESTAMP = 0xFFFFFFFFL; // unsigned 32-bit
     
     private final Supplier<byte[]> payloadSupplier;
 
@@ -79,13 +80,23 @@ public class KsuidGenerator {
 
     /**
      * Generate a new KSUID with a timestamp component derived from an Instant.
+     * <p>
+     * The instant must fall within the range of the unsigned 32-bit KSUID timestamp,
+     * from 2014-05-13T16:53:20Z through 2150-06-19T23:21:35Z (inclusive).
      *
      * @param instant an Instant from which to derive the timestamp component
      * @return a Ksuid object
+     * @throws IllegalArgumentException if the instant is outside the KSUID timestamp range
      */
     public Ksuid newKsuid(final Instant instant) {
+        final long epochSecond = instant.getEpochSecond();
+        if (epochSecond < EPOCH || epochSecond - EPOCH > MAX_TIMESTAMP) {
+            throw new IllegalArgumentException("instant must be between " + Instant.ofEpochSecond(EPOCH)
+                                               + " and " + Instant.ofEpochSecond(EPOCH + MAX_TIMESTAMP)
+                                               + " (inclusive): " + instant);
+        }
         return Ksuid.newBuilder()
-                    .withTimestamp((int) (instant.toEpochMilli() / 1000 - EPOCH)) // 4 bytes
+                    .withTimestamp((int) (epochSecond - EPOCH)) // 4 bytes
                     .withPayload(payloadSupplier.get()) // 16 bytes
                     .build();
     }
