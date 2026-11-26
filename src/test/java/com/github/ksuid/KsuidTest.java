@@ -191,6 +191,36 @@ public class KsuidTest {
         assertThat(list).isEqualTo(orderedList);
     }
 
+    @Test
+    public void timestampIsUnsigned() {
+        // Max KSUID: timestamp 0xFFFFFFFF is 2150-06-19T23:21:35Z, the same as segmentio/ksuid.
+        final Ksuid max = Ksuid.fromString("aWgEPTl1tmebfsQzFP4bxwgy80V");
+        assertThat(max.getInstant()).isEqualTo(Instant.parse("2150-06-19T23:21:35Z"));
+        assertThat(max.toInspectString()).contains("Timestamp: 4294967295");
+
+        // A KSUID made after 2082-05-31T20:07:28Z has the top timestamp bit set.
+        final Instant late = Instant.parse("2100-01-01T00:00:00Z");
+        final Ksuid lateKsuid = new KsuidGenerator(new SecureRandom()).newKsuid(late);
+        assertThat(lateKsuid.getInstant()).isEqualTo(late);
+    }
+
+    @Test
+    public void comparableWithTopTimestampBitSet() {
+        final Ksuid nil = Ksuid.fromString("000000000000000000000000000");
+        final Ksuid max = Ksuid.fromString("aWgEPTl1tmebfsQzFP4bxwgy80V");
+        final KsuidGenerator generator = new KsuidGenerator(new SecureRandom());
+        final Ksuid before = generator.newKsuid(Instant.parse("2082-01-01T00:00:00Z"));
+        final Ksuid after = generator.newKsuid(Instant.parse("2083-01-01T00:00:00Z"));
+
+        assertThat(nil.compareTo(max)).isNegative();
+        assertThat(max.compareTo(nil)).isPositive();
+        assertThat(before.compareTo(after)).isNegative();
+
+        final List<Ksuid> list = Arrays.asList(max, after, nil, before);
+        Collections.sort(list);
+        assertThat(list).containsExactly(nil, before, after, max);
+    }
+
     @Theory
     public void constructWithIncorrectPayloadSize(final int incorrectSize) {
         assertThatCode(() -> Ksuid.newBuilder().withTimestamp(TIMESTAMP).withPayload(new byte[incorrectSize]).build())

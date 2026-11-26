@@ -181,7 +181,7 @@ public final class Main {
     }
 
     private void printTimestamp(final Ksuid ksuid) {
-        printStream.println(ksuid.getTimestamp());
+        printStream.println(Integer.toUnsignedLong(ksuid.getTimestamp()));
     }
 
     private void printPayload(final Ksuid ksuid) {
@@ -197,7 +197,7 @@ public final class Main {
         result = result.replace("{{.String}}", ksuid.toString());
         result = result.replace("{{.Raw}}", ksuid.asRaw());
         result = result.replace("{{.Time}}", ksuid.getTime());
-        result = result.replace("{{.Timestamp}}", ksuid.getTimestamp() + "");
+        result = result.replace("{{.Timestamp}}", Integer.toUnsignedString(ksuid.getTimestamp()));
         result = result.replace("{{.Payload}}", ksuid.getPayload());
         printStream.println(result);
     }
