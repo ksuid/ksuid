@@ -223,7 +223,7 @@ public class Ksuid implements Comparable<Ksuid>, Serializable {
     public String toLogString() {
         return new StringJoiner(", ", this.getClass().getSimpleName() + "[", "]")
                 .add("string = " + toString())
-                .add("timestamp = " + timestamp)
+                .add("timestamp = " + Integer.toUnsignedLong(timestamp))
                 .add("payload = " + Arrays.toString(payload))
                 .add("ksuidBytes = " + Arrays.toString(ksuidBytes))
                 .toString();
