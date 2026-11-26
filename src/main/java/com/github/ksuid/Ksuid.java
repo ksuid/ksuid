@@ -100,11 +100,15 @@ public class Ksuid implements Comparable<Ksuid>, Serializable {
     /**
      * Creates a {@code Ksuid} with a timestamp component derived from the given Innstant
      * and random bytes provided by a cryptographically strong pseudo random number generator.
+     * <p>
+     * The instant must fall within the range of the unsigned 32-bit KSUID timestamp,
+     * from 2014-05-13T16:53:20Z through 2150-06-19T23:21:35Z (inclusive).
      *
      * @param  instant
      *         timestamp for Ksuid
      *
      * @return  A {@code Ksuid} with the specified value
+     * @throws IllegalArgumentException if the instant is outside the KSUID timestamp range
      */
     public static Ksuid fromInstant(final Instant instant) {
         return KsuidGenerator.getInstance()
