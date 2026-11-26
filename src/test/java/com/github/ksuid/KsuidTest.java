@@ -197,6 +197,7 @@ public class KsuidTest {
         final Ksuid max = Ksuid.fromString("aWgEPTl1tmebfsQzFP4bxwgy80V");
         assertThat(max.getInstant()).isEqualTo(Instant.parse("2150-06-19T23:21:35Z"));
         assertThat(max.toInspectString()).contains("Timestamp: 4294967295");
+        assertThat(max.toLogString()).contains("timestamp = 4294967295");
 
         // A KSUID made after 2082-05-31T20:07:28Z has the top timestamp bit set.
         final Instant late = Instant.parse("2100-01-01T00:00:00Z");
