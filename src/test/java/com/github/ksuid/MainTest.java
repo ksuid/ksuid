@@ -117,6 +117,21 @@ public class MainTest {
     }
 
     @Test
+    public void testTimestampAndTimeOfMaxKsuid() {
+        final RunResult timestamp = runMain("-f", "timestamp", "aWgEPTl1tmebfsQzFP4bxwgy80V");
+        assertThat(timestamp.exitCode).isZero();
+        assertThat(timestamp.stdout).isEqualTo("4294967295\n");
+
+        final RunResult time = runMain("-f", "time", "aWgEPTl1tmebfsQzFP4bxwgy80V");
+        assertThat(time.exitCode).isZero();
+        assertThat(time.stdout).isEqualTo("2150-06-19 16:21:35 -0700 PDT\n");
+
+        final RunResult template = runMain("-f", "template", "-t", "{{.Timestamp}}", "aWgEPTl1tmebfsQzFP4bxwgy80V");
+        assertThat(template.exitCode).isZero();
+        assertThat(template.stdout).isEqualTo("4294967295\n");
+    }
+
+    @Test
     public void testPayload() {
         final RunResult runResult = runMain("-f", "payload", "24rUCafWbTglyvWlQEuaxKqqiuY");
         assertThat(runResult.exitCode).isZero();

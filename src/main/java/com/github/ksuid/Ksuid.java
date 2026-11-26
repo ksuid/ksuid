@@ -27,7 +27,7 @@ public class Ksuid implements Comparable<Ksuid>, Serializable {
     private static final int TIMESTAMP_BYTES = 4;
     private static final int TOTAL_BYTES = TIMESTAMP_BYTES + PAYLOAD_BYTES;
     private static final int PAD_TO_LENGTH = 27;
-    private static final Comparator<Ksuid> COMPARATOR = Comparator.comparingInt(Ksuid::getTimestamp)
+    private static final Comparator<Ksuid> COMPARATOR = Comparator.<Ksuid>comparingLong(k -> Integer.toUnsignedLong(k.timestamp))
                                                                   .thenComparing(Ksuid::getPayload);
 
     private static final long serialVersionUID = 3069563682618421304L;
@@ -146,7 +146,7 @@ public class Ksuid implements Comparable<Ksuid>, Serializable {
      * @return an Instant
      */
     public Instant getInstant() {
-        return Instant.ofEpochSecond((long) timestamp + EPOCH);
+        return Instant.ofEpochSecond(Integer.toUnsignedLong(timestamp) + EPOCH);
     }
 
     /**
@@ -170,6 +170,9 @@ public class Ksuid implements Comparable<Ksuid>, Serializable {
 
     /**
      * Get the KSUID timestamp component.
+     * <p>
+     * The timestamp is an unsigned 32-bit value. Values above {@link Integer#MAX_VALUE}
+     * come back as negative ints; use {@link Integer#toUnsignedLong(int)} to read them.
      *
      * @return KSUID timestamp component
      */
@@ -205,7 +208,7 @@ public class Ksuid implements Comparable<Ksuid>, Serializable {
      */
     public String toInspectString() {
         return String.format("REPRESENTATION:%n%n  String: %1$s%n     Raw: %2$s%n%nCOMPONENTS:%n%n       Time: %3$s%n  Timestamp: %4$d%n    Payload: %5$s%n",
-                             toString(), asRaw(), getTime(), getTimestamp(), getPayload());
+                             toString(), asRaw(), getTime(), Integer.toUnsignedLong(timestamp), getPayload());
     }
 
     /**
